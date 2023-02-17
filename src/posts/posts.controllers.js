@@ -10,7 +10,7 @@ const findAllPosts = async () => {
 const findPostById = async (id) => {
     const data = await Posts.findOne({
         where: {
-            id
+            id: id
         }
     })
     return data
@@ -21,7 +21,7 @@ const createPost = async (postObj) => {
     const newPost = {
 
         content: postObj.content,
-        userName: postObj.content,
+        userName: postObj.userName,
         isPublished: postObj.isPublished
     }
     const data = await Posts.create(newPost)
@@ -31,16 +31,16 @@ const createPost = async (postObj) => {
 const updatePost = async (id, postObj) => {
     const data = await Posts.update(postObj, {
         where: {
-            id
+            id: id
         }
     })
     return data
 }
 
-const deletePost = async () => {
+const deletePost = async (id) => {
     const data = await Posts.destroy({
         where: {
-            id
+            id: id
         }
     })
     return data

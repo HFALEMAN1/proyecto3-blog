@@ -1,17 +1,17 @@
 const postControllers = require('./posts.controllers')
 
 
-const getAllPosts = async (req, res) => {
+const getAllPosts = (req, res) => {
     postControllers.findAllPosts()
-        .then(post => {
-            res.status(200).json(post)
+        .then(data => {
+            res.status(200).json(data)
         })
         .catch(err => {
             res.status(400).json(err)
         })
 }
 
-const getPostsById = async (req, res) => {
+const getPostsById = (req, res) => {
     const id = (req.params.id)
     postControllers.findPostById(id)
         .then(data => {
@@ -38,12 +38,12 @@ const postNewPost = (req, res) => {
 }
 
 
-const deletePost = async (req, res) => {
+const deletePost = (req, res) => {
     const id = req.params.id
     postControllers.deletePost(id)
         .then(data => {
             if (data === 1) {
-                res.status(204).json({ message: 'Post deleted' })
+                res.status(200).json({ message: 'Post deleted' })
             } else {
                 res.status(404).json({ message: 'Post not found' })
             }
@@ -54,7 +54,7 @@ const deletePost = async (req, res) => {
         })
 }
 
-const patchPost = async (req, res) => {
+const patchPost = (req, res) => {
     const id = req.params.id
     const postObj = req.body
     postControllers.updatePost(id, postObj)
@@ -70,36 +70,6 @@ const patchPost = async (req, res) => {
             res.status(400).json(err)
         })
 }
-
-// const putPost = (req, res) => {
-//     const id = req.params.id
-//     const postObj = req.body
-//     if (!postObj.content || !postObj.userName || !postObj.isPublished) {
-//         return res.status(400).json({
-//             message: 'Missing Data',
-//             example_fields: {
-//                 content: 'string',
-//                 userName: 'string',
-
-//             }
-//         })
-//     }
-//     postControllers.updatePost(id, postObj)
-//         .then(data => {
-//             if (data) {
-//                 res.status(200).json({ message: `Post with id:${id} update succefuly` })
-//             } else {
-//                 res.status(404).json({ message: 'Pos not found' })
-
-//             }
-//         })
-//         .catch(err => {
-//             res.status(400).json(err)
-//         })
-// }
-
-
-
 
 module.exports = {
     getAllPosts,
